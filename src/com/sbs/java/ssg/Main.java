@@ -56,29 +56,53 @@ public class Main {
 				// commandBits[0] = article, commandBits[1] = detail, commandBits[2] = 숫자
 				int id = Integer.parseInt(commandBits[2]); // String을 int형으로 바꿔줌
 
-				boolean found = false;
+				// boolean found = false;
 				Article foundArticle = null;
 
 				for (int i = 0; i < articles.size(); i++) {
 					Article article = articles.get(i);
 
 					if (article.id == id) {
-						found = true;
+						// found = true;
 						foundArticle = article;
 						break;
 					}
 
 				}
 
-				if (found == false) {
+				if (foundArticle == null) {// found == false
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
 					continue;
 				}
-
 				System.out.printf("번호 : %d\n", foundArticle.id);
 				System.out.printf("날짜 : 2020-08-07\n");
 				System.out.printf("제목 : %s\n", foundArticle.title);
 				System.out.printf("내용 : %s\n", foundArticle.body);
+
+			} else if (command.startsWith("article delete ")) {
+				String[] commandBits = command.split(" ");
+				int id = Integer.parseInt(commandBits[2]);
+
+				int foundIndex = -1;
+				
+				for (int i = 0; i < articles.size(); i++) {
+					Article article = articles.get(i);
+
+					if (article.id == id) {
+						foundIndex = i; //인덱스 번호를 저장할 변수 , 삭제시 몇번째 인덱스를 삭제할것인가
+						break;
+					}
+
+				}
+
+				if (foundIndex == -1) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+					continue;
+
+				}
+
+				articles.remove(foundIndex);
+				System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
 
 			} else {
 				System.out.printf("%s(은)는 존재하지 않는 명령어 입니다.\n", command);
